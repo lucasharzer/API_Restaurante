@@ -12,6 +12,7 @@ API com Node.js e com banco de dados MySQL de um sistema de restaurante com func
 - jwt-decode: Decodifica token de acesso;
 - mysql2: Cria conexão e executa comandos em banco de dados MySQL;
 - nodemon: Reinicia automaticamente a API ao notar alterações;
+- nodemailer: Enviar e-mails com o node.js;
 - swagger-autogen: Cria a documentação web da API com o Swagger por meio de identificação automática de todos os métodos usados;
 - swagger-ui-express: Permite a criação de documentação da API.
 
