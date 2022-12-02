@@ -1,0 +1,1158 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API Restaurante",
+    "description": "Sistema de restaurante com funcionalidades de funcionários, clientes, planos, cardapio e pedidos."
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/funcionarios/cadastro": {
+      "post": {
+        "description": "Funcionários: Cadastro.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "example": "Arthur Oliveira"
+                },
+                "idade": {
+                  "example": "27"
+                },
+                "cpf": {
+                  "example": "810.389.310-29"
+                },
+                "email": {
+                  "example": "art45@gmail.com"
+                },
+                "senha": {
+                  "example": "ckfnhdovbd4543"
+                },
+                "confirmar_senha": {
+                  "example": "ckfnhdovbd4543"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Cadastrado."
+          },
+          "400": {
+            "description": "Erro de valor."
+          },
+          "409": {
+            "description": "Funcionário já existe."
+          }
+        }
+      }
+    },
+    "/funcionarios/login": {
+      "post": {
+        "description": "Funcionário: Login.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "art45@gmail.com"
+                },
+                "senha": {
+                  "example": "ckfnhdovbd4543"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "404": {
+            "description": "Funcionário não encontrado."
+          }
+        }
+      }
+    },
+    "/funcionarios/esquecer_senha": {
+      "post": {
+        "description": "Funcionário: Esqueci minha senha",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "art45@gmail.com"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "404": {
+            "description": "Funcionário não encontrado."
+          }
+        }
+      }
+    },
+    "/clientes/cadastro": {
+      "post": {
+        "description": "Cliente: Cadastro.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "example": "Helena Silva"
+                },
+                "idade": {
+                  "example": "30"
+                },
+                "cpf": {
+                  "example": "193.205.040-08"
+                },
+                "email": {
+                  "example": "helena465@gmail.com"
+                },
+                "senha": {
+                  "example": "9askls4kako7la"
+                },
+                "confirmar_senha": {
+                  "example": "9askls4kako7la"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Cadastrado."
+          },
+          "400": {
+            "description": "Erro de valor."
+          },
+          "409": {
+            "description": "Esse cliente já existe."
+          }
+        }
+      }
+    },
+    "/clientes/login": {
+      "post": {
+        "description": "Cliente: Login.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "helena465@gmail.com"
+                },
+                "senha": {
+                  "example": "9askls4kako7la"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "404": {
+            "description": "Cliente não encontrado."
+          }
+        }
+      }
+    },
+    "/clientes/esquecer_senha": {
+      "post": {
+        "description": "Cliente: Esqueci minha senha",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "helena465@gmail.com"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso"
+          },
+          "404": {
+            "description": "Cliente não encontrado."
+          }
+        }
+      }
+    },
+    "/cardapio/itens/disponiveis": {
+      "get": {
+        "description": "Listar itens disponíveis",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          }
+        }
+      }
+    },
+    "/cardapio/itens/{cod}": {
+      "get": {
+        "description": "Listar itens pelo codProduto",
+        "parameters": [
+          {
+            "name": "cod",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          }
+        }
+      }
+    },
+    "/cardapio/itens": {
+      "get": {
+        "description": "Listar todos os itens do cardápio",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          }
+        }
+      }
+    },
+    "/planos": {
+      "get": {
+        "description": "Listar todos os planos.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          }
+        }
+      }
+    },
+    "/planos/{cod}": {
+      "get": {
+        "description": "Listar plano pelo codPlano.",
+        "parameters": [
+          {
+            "name": "cod",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          }
+        }
+      }
+    },
+    "/funcionarios/confirmacao": {
+      "post": {
+        "description": "Funcionário: Confirmação por e-mail (código de 4 dígitos)",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valor": {
+                  "example": "8762"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "400": {
+            "description": "Erro de algum valor."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/funcionarios/trocar_senha": {
+      "post": {
+        "description": "Funcionário: Trocar senha por e-mail (código de 4 dígitos)",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valor": {
+                  "example": "8932"
+                },
+                "nova_senha": {
+                  "example": "adkso4565qlsaps0"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "400": {
+            "description": "Erro de algum valor."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/funcionarios/perfil": {
+      "get": {
+        "description": "Funcionário: Mostrar perfil.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "404": {
+            "description": "Funcionário não encontrado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/funcionarios/alterar/idade": {
+      "put": {
+        "description": "Funcionário: Alterar idade.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "idade": {
+                  "example": "32"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "400": {
+            "description": "Erro de algum valor."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/funcionarios/alterar/nome": {
+      "put": {
+        "description": "Funcionário: Alterar nome.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "example": "Maria Julia"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "400": {
+            "description": "Erro de algum valor."
+          },
+          "401": {
+            "description": "não autorizado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/funcionarios/alterar/senha": {
+      "put": {
+        "description": "Funcionário: alterar senha.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "senha": {
+                  "example": "dsplpsd45lmasal23"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "400": {
+            "description": "Erro de algum valor."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/funcionarios/pratos/criar": {
+      "post": {
+        "description": "Funcionário: Criar prato.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "example": "Lasanha"
+                },
+                "descricao": {
+                  "example": "Serve 3 pessoas."
+                },
+                "valor": {
+                  "example": "35.0"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Cadastrado."
+          },
+          "400": {
+            "description": "Erro de algum valor."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "409": {
+            "description": "Prato já existe."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/funcionarios/pratos/alterar": {
+      "put": {
+        "description": "Funcionário: Alterar prato",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cod": {
+                  "example": "3"
+                },
+                "valor": {
+                  "example": "32.7"
+                },
+                "disponibilidade": {
+                  "example": "1"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "400": {
+            "description": "Algum erro ocorreu."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/funcionarios/pratos/remover": {
+      "delete": {
+        "description": "Remover um prato",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cod": {
+                  "example": "4"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "400": {
+            "description": "Erro de algum valor."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/clientes/confirmacao": {
+      "post": {
+        "description": "Cliente: confirmação por e-mail (código de 4 dígitos)",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valor": {
+                  "example": "1257"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "400": {
+            "description": "Erro de algum valor."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/clientes/trocar_senha": {
+      "put": {
+        "description": "Cliente: Trocar senha por e-mail (código de 4 dígitos)",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valor": {
+                  "example": "9845"
+                },
+                "nova_senha": {
+                  "example": "asihwf3ji3cf"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "400": {
+            "description": "Erro de algum valor."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/clientes/plano/mostrar": {
+      "get": {
+        "description": "Cliente: Mostrar plano.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "404": {
+            "description": "Cliente não encontrado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/clientes/plano/alterar": {
+      "put": {
+        "description": "Cliente: Alterar plano.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cod_plano": {
+                  "example": "2"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso"
+          },
+          "400": {
+            "description": "Erro de algum valor."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/clientes/perfil": {
+      "get": {
+        "description": "Cliente: Mostrar perfil.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "404": {
+            "description": "Cliente não encontrado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/clientes/alterar/idade": {
+      "put": {
+        "description": "Cliente: Alterar idade",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "idade": {
+                  "example": "33"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sucesso."
+          },
+          "400": {
+            "description": "Erro de algum valor."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/clientes/alterar/nome": {
+      "put": {
+        "description": "Cliente: Alterar nome.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "example": "Maria Clara"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "400": {
+            "description": "Erro de algum valor."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/clientes/alterar/senha": {
+      "put": {
+        "description": "Cliente: Alterar senha.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "senha": {
+                  "example": "akvdoi3909csla"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "400": {
+            "description": "Erro de algum valor."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/pedidos/criar": {
+      "post": {
+        "description": "Criar um pedido.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pedido": {
+                  "example": "[4, 6, 9]"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Criado."
+          },
+          "400": {
+            "description": "Erro de algum valor."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "404": {
+            "description": "Cliente não encontrado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/pedidos/entregar": {
+      "put": {
+        "description": "Entregar um pedido.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cod_pedido": {
+                  "example": "5"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Entregue"
+          },
+          "400": {
+            "description": "Erro de algum valor."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "404": {
+            "description": "Funcionário não encontrado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/pedidos/cancelar": {
+      "delete": {
+        "description": "Cancelar um pedido.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cod_pedido": {
+                  "example": "6"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cancelado."
+          },
+          "400": {
+            "description": "Erro de algum valor."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "404": {
+            "description": "Funcionário não encontrado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/pedidos": {
+      "get": {
+        "description": "Listar todos os Pedidos",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "404": {
+            "description": "Funcionário não encontrado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/pedidos/entregues": {
+      "get": {
+        "description": "Listar pedidos entregues.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "404": {
+            "description": "Funcionário não encontrado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/pedidos/nao_entregues": {
+      "get": {
+        "description": "Listar pedidos pendentes.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "404": {
+            "description": "Funcionário não encontrado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    },
+    "/pedidos/{cod}": {
+      "get": {
+        "description": "Listar pedido pelo codPedido.",
+        "parameters": [
+          {
+            "name": "cod",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso."
+          },
+          "401": {
+            "description": "Não autorizado."
+          },
+          "404": {
+            "description": "Funcionário não encontrado."
+          },
+          "498": {
+            "description": "Token expirado."
+          }
+        }
+      }
+    }
+  }
+}
