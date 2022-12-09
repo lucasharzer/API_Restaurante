@@ -50,17 +50,17 @@ npm start
 
 # Resultados
 
-cmd
+cmd:
 <span>
     <img src="https://user-images.githubusercontent.com/85804895/205183705-dbb33c2d-ee08-4241-a1e8-33d9aec008af.png">
 </span>
 
-banco de dados MySQL
+banco de dados MySQL:
 <span>
     <img src="https://user-images.githubusercontent.com/85804895/205183960-b92feb8b-aa6f-4c10-9839-d70980520330.png">
 </span>
 
-Postman
+Postman:
 <span>
     <img src="https://user-images.githubusercontent.com/85804895/205184076-c2a0e125-10aa-4e4d-ba04-10539bf3a017.png">
 </span>
@@ -69,7 +69,7 @@ Postman
     <img src="https://user-images.githubusercontent.com/85804895/205184158-bef7cbc1-11bd-4943-9116-1e791e15bff5.png">
 </span>
 
-Swagger
+Swagger:
 <span>
     <img src="https://user-images.githubusercontent.com/85804895/205184213-73fe6a7d-90a0-465e-970d-6d6ad408340d.png">
 </span>
