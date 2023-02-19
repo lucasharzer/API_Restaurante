@@ -1,7 +1,7 @@
 const mysql = require("mysql2");
 const bcrypt = require("bcrypt");
 
-const db = require("../../database/database");
+const query = require("../../database/query");
 const generateAccessToken = require("../../middlewares/generateAccessToken");
 
 
@@ -10,44 +10,42 @@ exports.login_funcionarios = async(req, res) => {
     const email = req.body.email;
     const senha = req.body.senha;
 
-    db.getConnection(async(err, connection) => {
-        if (err) throw (err);
-
+    try{
         const sqlSelect = "SELECT senha FROM funcionarios WHERE email = ?";
         const selectQuery = mysql.format(sqlSelect, [email]);
 
-        connection.query(selectQuery, async(err, result) => {
-            try{
-                connection.release();
+        const result = await query.execute_query(selectQuery);
+        if (result.length == 0){
+            return res.status(404).send({
+                id: 0,
+                mensagem: "Email não foi encontrado"
+            });
+        }
 
-                if (err) throw (err);
+        const senha_banco = result[0].senha;
+        
+        if (!await bcrypt.compare(senha, senha_banco)){
+            return res.status(401).send({
+                id: 0,
+                mensagem: "Senha incorreta."
+            });
+        }else{
+            const token = generateAccessToken({ 
+                email: email 
+            });
 
-                if (result.length == 0){
-                    return res.status(404).send({
-                        id: 0,
-                        mensagem: "Email não foi encontrado"
-                    });
-                }
-
-                const senha_banco = result[0].senha;
-                
-                if (!await bcrypt.compare(senha, senha_banco)){
-                    return res.status(401).send({
-                        id: 0,
-                        mensagem: "Senha incorreta."
-                    });
-                }else{
-                    const token = generateAccessToken({ email: email })
-
-                    return res.status(200).send({
-                        id: 1,
-                        mensagem: "Login foi feito com sucesso.",
-                        accessToken: token
-                    });
-                }
-            }finally{
-                connection.destroy();
-            }
+            return res.status(200).send({
+                id: 1,
+                mensagem: "Login foi feito com sucesso.",
+                accessToken: token
+            });
+        }
+    }catch(err){
+        console.log("Erro:", err);
+        return res.status(500).send({
+            id: 0,
+            mensagem: "Sinto muito, o servidor está passando por alguns problemas.",
+            erro: err
         });
-    });
+    }
 }

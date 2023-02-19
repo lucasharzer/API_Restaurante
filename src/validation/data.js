@@ -1,6 +1,5 @@
 // Pegar a data atual
 function Data(){
-
     var data = new Date();
 
     var dia = data.getDate();

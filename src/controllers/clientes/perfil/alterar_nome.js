@@ -1,7 +1,7 @@
 const jwt_decode = require("jwt-decode");
 const mysql = require("mysql2");
 
-const db = require("../../../database/database");
+const query = require("../../../database/query");
 
 
 // Alterar nome do cliente
@@ -12,9 +12,7 @@ exports.alterar_nome_clientes = async(req, res) => {
     const decode = jwt_decode(token);
     const email = decode.email;
 
-    db.getConnection(async(err, connection) => {
-        if (err) throw (err);
-
+    try{
         if (nome == undefined || nome.length == 0){
             return res.status(400).send({
                 id: 0,
@@ -26,21 +24,17 @@ exports.alterar_nome_clientes = async(req, res) => {
             const sqlUpdate = "UPDATE clientes SET nome = ? WHERE email = ?";
             const updateQuery = mysql.format(sqlUpdate, [nome, email]);
 
-            connection.query(updateQuery, async(err, result) => {
-                try{
-                    connection.release();
-
-                    if (err) throw (err);
-
-                    return res.status(200).send({
-                        id: 1,
-                        mensagem: "Nome alterado com sucesso."
-                    });
-
-                }finally{
-                    connection.destroy();
-                }
+            await query.execute_query(updateQuery);
+            return res.status(200).send({
+                id: 1,
+                mensagem: "Nome alterado com sucesso."
             });
         }
-    });
+    }catch(err){
+        console.log("Erro:", err);
+        return res.status(500).send({
+            id: 0,
+            mensagem: "Sinto muito, o servidor está passando por alguns problemas."
+        })
+    }
 }

@@ -17,6 +17,7 @@ db.getConnection( (err, connection) => {
     if (err) throw (err);
 
     console.log("Conexão com banco de dados bem sucedida: " + connection.threadId)
+    connection.release();
 });
 
 module.exports = db;

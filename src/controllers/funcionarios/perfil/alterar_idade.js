@@ -1,7 +1,7 @@
 const jwt_decode = require("jwt-decode");
 const mysql = require("mysql2");
 
-const db = require("../../../database/database");
+const query = require("../../../database/query");
 
 
 // Alterar idade do funcionário
@@ -12,9 +12,7 @@ exports.alterar_idade_funcionarios = async(req, res) => {
     const decode = jwt_decode(token);
     const email = decode.email;
 
-    db.getConnection(async(err, connection) => {
-        if (err) throw (err);
-
+    try{
         if (idade == undefined || idade.length == 0 || typeof(idade) != "number"){
             return res.status(400).send({
                 id: 0,
@@ -26,21 +24,18 @@ exports.alterar_idade_funcionarios = async(req, res) => {
             const sqlUpdate = "UPDATE funcionarios SET idade = ? WHERE email = ?";
             const updateQuery = mysql.format(sqlUpdate, [idade, email]);
 
-            connection.query(updateQuery, async(err, result) => {
-                try{
-                    connection.release();
-
-                    if (err) throw (err);
-
-                    return res.status(200).send({
-                        id: 1,
-                        mensagem: "Idade alterada com sucesso."
-                    });
-
-                }finally{
-                    connection.destroy();
-                }
+            await query.execute_query(updateQuery);
+            return res.status(200).send({
+                id: 1,
+                mensagem: "Idade alterada com sucesso."
             });
         }
-    });
+    }catch(err){
+        console.log("Erro:", err);
+        return res.status(500).send({
+            id: 0,
+            mensagem: "Sinto muito, o servidor está passando por alguns problemas.",
+            erro: err
+        });
+    }
 }

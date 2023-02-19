@@ -1,38 +1,35 @@
 const mysql = require("mysql2");
 
-const db = require("../../database/database");
+const query = require("../../database/query");
 
 
 // Exibir um item específico do cardápio
 exports.item_cardapio = async(req, res) => {
     const cod_produto = parseInt(req.params.cod);
 
-    db.getConnection(async(err, connection) => {
-        if (err) throw (err);
-
+    try{
         const sqlSelect = "SELECT * FROM cardapio WHERE codProduto = ?";
         const selectQuery = mysql.format(sqlSelect, [cod_produto]);
 
-        connection.query(selectQuery, async(err, result) => {
-            try{
-                connection.release();
+        const result = await query.execute_query(selectQuery);
+        if (result.length == 0){
+            return res.status(200).send({
+                id: 1,
+                mensagem: "Não há esse item."
+            });
+        }else{
+            return res.status(200).send({
+                id: 1,
+                item: result
+            });
+        }
 
-                if (err) throw (err);
-
-                if (result.length == 0){
-                    return res.status(200).send({
-                        id: 1,
-                        mensagem: "Não há esse item."
-                    });
-                }else{
-                    return res.status(200).send({
-                        id: 1,
-                        item: result
-                    });
-                }
-            }finally{
-                connection.destroy();
-            }
+    }catch(err){
+        console.log("Erro:", err);
+        return res.status(500).send({
+            id: 0,
+            mensagem: "Sinto muito, o servidor está passando por alguns problemas.",
+            erro: err
         });
-    });
+    }
 }

@@ -2,7 +2,7 @@ const jwt_decode = require("jwt-decode");
 const mysql = require("mysql2");
 const bcrypt = require("bcrypt");
 
-const db = require("../../database/database");
+const query = require("../../database/query");
 
 
 // Alterar senha funcionários
@@ -14,62 +14,49 @@ exports.trocar_senha_funcionarios = async(req, res) => {
     const decoded = jwt_decode(token);
     const email = decoded.email;
 
-    db.getConnection(async(err, connection) => {
-        if (err) throw (err);
+    try{
+        const sqlSelect = "SELECT id, codEmail FROM funcionarios WHERE email = ?";
+        const selectQuery = mysql.format(sqlSelect, [email]);
 
-        const sqlSelect = "SELECT id, codEmail FROM funcionarios WHERE email = ?"
-        const selectQuery = mysql.format(sqlSelect, [email])
+        const result = await query.execute_query(selectQuery);
+        if (result.length == 0){
+            return res.status(400).send({
+                id: 0,
+                mensagem: "O código de troca não está mais disponível"
+            });
+        }
 
-        connection.query(selectQuery, async(err, result) => {
-            try{
-                connection.release()
+        const id = result[0].id;
+        const valor_enviado = result[0].codEmail;
 
-                if (err) throw (err);
+        if (valor_enviado != valor_recebido){
+            return res.status(401).send({
+                id: 0, 
+                mensagem: "O código de troca está incorreto."
+            });
+        }else{
+            const sqlUpdate = "UPDATE funcionarios SET trocaSenha = ?, codEmail = ?, senha = ? WHERE id = ?";
+            const updateQuery = mysql.format(sqlUpdate, [0, 0, nova_senha, id])
 
-                if (result.length == 0){
-                    return res.status(400).send({
-                        id: 0,
-                        mensagem: "O código de troca não está mais disponível"
-                    });
-                }
-
-                const id = result[0].id;
-                const valor_enviado = result[0].codEmail;
-
-                if (valor_enviado != valor_recebido){
-                    return res.status(401).send({
-                        id: 0, 
-                        mensagem: "O código de troca está incorreto."
-                    });
-                }else{
-                    const sqlUpdate = "UPDATE funcionarios SET trocaSenha = ?, codEmail = ?, senha = ? WHERE id = ?";
-                    const updateQuery = mysql.format(sqlUpdate, [0, 0, nova_senha, id])
-
-                    if (req.body.nova_senha.length == 0){
-                        return res.status(400).send({
-                            id: 0,
-                            mensagem: "A nova senha não pode ser vazia."
-                        });
-                    }
-
-                    connection.query(updateQuery, async(err, result) => {
-                        try{
-                            connection.release();
-
-                            if (err) throw (err);
-
-                            return res.status(200).send({
-                                id: 1,
-                                mensagem: "Senha trocada com sucesso."
-                            });
-                        }finally{
-                            connection.destroy();
-                        }
-                    });
-                }
-            }finally{
-                connection.destroy();
+            if (req.body.nova_senha.length == 0){
+                return res.status(400).send({
+                    id: 0,
+                    mensagem: "A nova senha não pode ser vazia."
+                });
             }
+
+            await query.execute_query(updateQuery);
+            return res.status(200).send({
+                id: 1,
+                mensagem: "Senha trocada com sucesso."
+            });
+        }
+    }catch(err){
+        console.log("Erro:", err);
+        return res.status(500).send({
+            id: 0,
+            mensagem: "Sinto muito, o servidor está passando por alguns problemas.",
+            erro: err
         });
-    });
+    }
 }

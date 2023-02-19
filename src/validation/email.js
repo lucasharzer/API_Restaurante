@@ -1,6 +1,5 @@
 // Validar um email
 function validarEmail(e) {
-
     if (typeof(e) !== 'string') {
         return false
     } else {

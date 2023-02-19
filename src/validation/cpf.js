@@ -1,6 +1,5 @@
 // Validar um CPF
 function Validar(c) {
-
     const cpf_numero = c.replace('.', '').replace('.', '').replace('-', '').trim();
     let novePrimeiros = cpf_numero.substr(0, 9)
     let dezPrimeiros = cpf_numero.substr(0, 10)

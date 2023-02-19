@@ -1,44 +1,38 @@
 const mysql = require("mysql2");
 const jst_decode = require("jwt-decode");
 
-const db = require("../../database/database");
+const query = require("../../database/query");
 
 
 // Listar pedidos pendentes
 exports.listar_pedidos_n_entregues = async(req, res) => {
-    
     const token = req.headers.authorization;
 
     const decode = jst_decode(token);
     const email = decode.email;
 
-    db.getConnection(async(err, connection) => {
-        
-        if (err) throw (err);
-
+    try{
         const sqlSelect = "SELECT * FROM pedidos WHERE entrega = 0 AND (SELECT COUNT(*) FROM restaurante.funcionarios WHERE email = ?) <> 0";
         const selectQuery = mysql.format(sqlSelect, [email]);
 
-        connection.query(selectQuery, async(err, result) => {
-            try{
-                connection.release();
-
-                if (err) throw (err);
-
-                if (result.length == 0){
-                    return await res.status(404).send({
-                        id: 0,
-                        mensagem: "Não há pedidos."
-                    });
-                }else{
-                    return await res.status(200).send({
-                        id: 1,
-                        pedidos: result
-                    });
-                }
-            }finally{
-                connection.destroy();
-            }
+        const result = await query.execute_query(selectQuery);
+        if (result.length == 0){
+            return await res.status(404).send({
+                id: 0,
+                mensagem: "Não há pedidos."
+            });
+        }else{
+            return await res.status(200).send({
+                id: 1,
+                pedidos: result
+            });
+        }
+    }catch(err){
+        console.log("Erro:", err);
+        return res.status(500).send({
+            id: 0,
+            mensagem: "Sinto muito, o servidor está passando por alguns problemas.",
+            erro: err
         });
-    });
+    }
 }

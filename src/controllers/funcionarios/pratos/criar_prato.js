@@ -1,7 +1,7 @@
 const mysql = require("mysql2");
 const jwt_decode = require("jwt-decode");
 
-const db = require("../../../database/database");
+const query = require("../../../database/query");
 const Data = require("../../../validation/data");
 
 
@@ -15,9 +15,7 @@ exports.criar_prato = async(req, res) => {
     const decode = jwt_decode(token);
     const email = decode.email;
 
-    db.getConnection(async(err, connection) => {
-        if (err) throw (err);
-
+    try{
         if (nome == undefined || nome.length == 0){
             return res.status(400).send({
                 id: 0,
@@ -45,41 +43,31 @@ exports.criar_prato = async(req, res) => {
         const data = Data();
 
         const sqlSelect = "SELECT * FROM cardapio WHERE prato = ? AND (SELECT COUNT(*) FROM funcionarios WHERE email = ?) <> 0";
-        const selectQuery = mysql.format(sqlSelect, [nome, email])
+        const selectQuery = mysql.format(sqlSelect, [nome, email]);
 
-        connection.query(selectQuery, async(err, result) => {
-            try{
-                connection.release();
+        const result = await query.execute_query(selectQuery);
+        if (result.length != 0){
+            return res.status(409).send({
+                id: 0,
+                mensagem: "Esse Prato já existe."
+            });
+        }else{
+            const sqlInsert = "INSERT INTO cardapio (prato, descricao, valor, dataCriacao, dataAtualizacao) VALUES (?, ?, ?, ?, ?)";
+            const insertQuery = mysql.format(sqlInsert, [nome, descricao, valor, data, data]);
 
-                if (err) throw (err);
+            await query.execute_query(insertQuery);
+            return res.status(201).send({
+                id: 1,
+                mensagem: "Prato criado com sucesso."
+            });
+        }
 
-                if (result.length != 0){
-                    return res.status(409).send({
-                        id: 0,
-                        mensagem: "Esse Prato já existe."
-                    });
-                }else{
-                    const sqlInsert = "INSERT INTO cardapio (prato, descricao, valor, dataCriacao, dataAtualizacao) VALUES (?, ?, ?, ?, ?)";
-                    const insertQuery = mysql.format(sqlInsert, [nome, descricao, valor, data, data])
-
-                    connection.query(insertQuery, async(err, result) => {
-                        try{
-                            connection.release();
-
-                            if (err) throw (err);
-
-                            return res.status(201).send({
-                                id: 1,
-                                mensagem: "Prato criado com sucesso."
-                            });
-                        }finally{
-                            connection.destroy();
-                        }
-                    });
-                }
-            }finally{
-                connection.destroy();
-            }
+    }catch(err){
+        console.log("Erro:", err);
+        return res.status(500).send({
+            id: 0,
+            mensagem: "Sinto muito, o servidor está passando por alguns problemas.",
+            erro: err
         });
-    });
+    }
 }
