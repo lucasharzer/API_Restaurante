@@ -1,0 +1,13 @@
+version: "3.8"
+networks:
+  app-tier:
+    driver: bridge
+services:
+  app:
+    container_name: "api-restaurante"
+    build: .
+    command: bash -c 'npm start'
+    ports:
+      - "3000:3000"
+    networks:
+      - app-tier

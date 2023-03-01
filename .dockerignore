@@ -1,0 +1,8 @@
+node_modules
+.gitignore
+creation.sql
+package-lock.json
+README.md
+img
+system.txt
+commands.txt

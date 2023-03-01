@@ -1,6 +1,6 @@
 # API Restaurante
 
-API com Node.js e com banco de dados MySQL de um sistema de restaurante com funcionalidades para funcionários, clientes, planos para os clientes, cardápio e pedidos dos clientes. Além disso, há envio automático de e-mail, criptografia de senhas, Bearer token de acesso para autenticação, possui todos os métodos de API (GET, POST, PUT e DELETE) e documentação no Swagger.
+API com Node.js e com banco de dados MySQL de um sistema de restaurante com funcionalidades para funcionários, clientes, planos para os clientes, cardápio e pedidos dos clientes. Além disso, há envio automático de e-mail, criptografia de senhas, Bearer token de acesso para autenticação, possui todos os métodos de API (GET, POST, PUT e DELETE), documentação no Swagger e passar a aplicação para o Docker.
 
 # Pacotes
 
@@ -48,6 +48,16 @@ Colocar a API em execução
 npm start
 ```
 
+Verificar a versão do Docker
+```bash
+docker --version
+```
+
+Dockerizar e executar a API dentro dele
+```bash
+docker compose up
+```
+
 # Resultados
 
 cmd:
@@ -76,4 +86,13 @@ Swagger:
 
 <span>
     <img src="https://user-images.githubusercontent.com/85804895/205184306-8d0b5cc2-9872-412e-8267-9ceed3b4e6e6.png">
+</span>
+
+Docker:
+<span>
+    <img src="https://user-images.githubusercontent.com/85804895/222026303-ae46c799-8a7e-4238-a5bc-1022bde94611.png">
+</span>
+
+<span>
+    <img src="https://user-images.githubusercontent.com/85804895/222026397-e41a5e27-a933-430c-a84b-69a7e327ea9f.png">
 </span>

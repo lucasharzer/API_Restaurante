@@ -1,3 +1,6 @@
+# node_modules
+node_modules
+
 # Tirar arquivos .txt
 *.txt
 
@@ -7,6 +10,5 @@ img
 # Arquivo de variáveis de ambiente .env
 .env
 
-# Arquivos docker
-*.yml
-Dockerfile
+# Arquivo que descreve completamente as dependências usadas
+package-lock.json
