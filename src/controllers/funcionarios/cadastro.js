@@ -87,6 +87,7 @@ exports.cadastro_funcionarios = async(req, res) => {
             const insertQuery = mysql.format(sqlInsert, [nome.toString().trim(), idade, cpf, email.toString().trim(), senha, valor, data]);
 
             await query.execute_query(insertQuery);
+            enviarEmail(email, valor, "Funcionário");
             return res.status(201).send({
                 id: 1,
                 mensagem: "Funcionário cadastrado com sucesso. Cheque o código de validação enviado no seu email para confirmar o cadastro.",
@@ -100,7 +101,5 @@ exports.cadastro_funcionarios = async(req, res) => {
             mensagem: "Sinto muito, o servidor está passando por alguns problemas",
             erro: err
         });
-    }finally{
-        enviarEmail(email, valor, "Funcionário");
     }
 }
