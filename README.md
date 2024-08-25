@@ -117,3 +117,11 @@ Docker:
 <span>
     <img src="https://user-images.githubusercontent.com/85804895/222026397-e41a5e27-a933-430c-a84b-69a7e327ea9f.png">
 </span>
+
+PM2:
+<span>
+    <img src="https://github.com/user-attachments/assets/00fc819e-eb68-4ad7-b310-c526010459d4">
+</span>
+<span>
+    <img src="https://github.com/user-attachments/assets/4c31271c-a34f-411f-be22-89a4964b6acd">
+</span>
