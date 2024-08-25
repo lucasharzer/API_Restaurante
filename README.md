@@ -33,9 +33,9 @@ Criar o JSON dos pacotes
 npm init
 ```
 
-Instalar algum pacote
+Instalar dependências
 ```bash
-npm i pacote
+npm install
 ```
 
 Criar o JSON do Swagger
