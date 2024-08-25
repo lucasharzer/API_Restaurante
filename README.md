@@ -120,7 +120,7 @@ Docker:
 
 PM2:
 <span>
-    <img src="https://github.com/user-attachments/assets/00fc819e-eb68-4ad7-b310-c526010459d4">
+    <img src="https://github.com/user-attachments/assets/3f4e25ac-06c1-41ec-b0bf-7f1ecfa9fe4f">
 </span>
 <span>
     <img src="https://github.com/user-attachments/assets/4c31271c-a34f-411f-be22-89a4964b6acd">
