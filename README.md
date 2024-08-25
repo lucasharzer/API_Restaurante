@@ -1,6 +1,6 @@
 # API Restaurante
 
-API com Node.js e com banco de dados MySQL de um sistema de restaurante com funcionalidades para funcionários, clientes, planos para os clientes, cardápio e pedidos dos clientes. Além disso, há envio automático de e-mail, criptografia de senhas, Bearer token de acesso para autenticação, possui todos os métodos de API (GET, POST, PUT e DELETE), documentação no Swagger e passar a aplicação para o Docker.
+API com Node.js e com banco de dados MySQL de um sistema de restaurante com funcionalidades para funcionários, clientes, planos para os clientes, cardápio e pedidos dos clientes. Além disso, há envio automático de e-mail, criptografia de senhas, Bearer token de acesso para autenticação, possui todos os métodos de API (GET, POST, PUT e DELETE), documentação no Swagger, configuração da aplicação para o Docker e execução com PM2 também.
 
 # Pacotes
 
@@ -56,6 +56,27 @@ docker --version
 Dockerizar e executar a API dentro dele
 ```bash
 docker compose up
+```
+
+Instalar PM2
+```bash
+npm install -g pm2
+```
+
+Executar no PM2
+```bash
+pm2 start src/index.js
+```
+
+Gerenciamento no PM2
+```bash
+pm2 status <id>
+```
+```bash
+pm2 logs <id>
+```
+```bash
+pm2 monit <id>
 ```
 
 # Resultados
